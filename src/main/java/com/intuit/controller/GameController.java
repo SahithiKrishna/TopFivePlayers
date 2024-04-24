@@ -38,13 +38,13 @@ public class GameController {
     }
 
     @PutMapping("games/{gameId}")
-    public Game modifyPlayerData(@RequestBody Game game) throws Exception {
+    public Game modifyGameData(@RequestBody Game game) throws Exception {
         log.info("Received request to modify game data for game with ID: {}", game.getGameId());
         return gameService.modifyGame(game);
     }
 
     @DeleteMapping("/games/{gameId}")
-    public void deletePlayer(@PathVariable long gameId) throws Exception {
+    public void deleteGame(@PathVariable long gameId) throws Exception {
         log.info("Received request to delete game with ID: {}", gameId);
         gameService.deleteGame(gameId);
     }

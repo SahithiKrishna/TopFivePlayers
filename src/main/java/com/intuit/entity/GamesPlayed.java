@@ -23,4 +23,10 @@ public class GamesPlayed {
     private Long gameId;
     @Column(name = "score")
     private int score;
+
+    public GamesPlayed (Long playerId, Long gameId, int score){
+        this.playerId = playerId;
+        this.gameId = gameId;
+        this.score = score;
+    }
 }

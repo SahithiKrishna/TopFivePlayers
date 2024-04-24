@@ -1,71 +1,78 @@
 package controller;
 
+import com.intuit.controller.GameController;
+import com.intuit.entity.Game;
+import com.intuit.service.GameService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+
 public class GameControllerTest {
 
-//    private GameService gameService;
-//    private GameController gameController;
-//
-//    @BeforeEach
-//    public void setup(){
-//        gameService = mock(GameService.class);
-//        gameController = new GameController(gameService);
-//    }
-//
-//    @Test
-//    public void testNewPlayerEntry() throws Exception {
-//        Player player = new Player(1L,"Sahiti", 32);
-//        when(gameService.postGameData(player)).thenReturn(new Player(1L,"Sahiti",32));
-//        Player resultPlayer = gameController.newPlayerEntry(player);
-//        Assertions.assertNotNull(resultPlayer);
-//        Assertions.assertEquals(player.getPlayerId(),resultPlayer.getPlayerId());
-//        Assertions.assertEquals(player.getName(),resultPlayer.getName());
-//        Assertions.assertEquals(player.getScore(),resultPlayer.getScore());
-//    }
-//
-//    @Test
-//    public void testGetAllPlayers() throws Exception {
-//        Player player1 = new Player(1L,"Sahiti", 32);
-//        Player player2 = new Player(2L,"Supriya", 36);
-//        List<Player> playerList = new ArrayList<>(Arrays.asList(player1,player2));
-//        when(gameService.getAllPlayers()).thenReturn(playerList);
-//        List<Player> resultPlayerList = gameController.getAllPlayers();
-//        Assertions.assertNotNull(resultPlayerList);
-//        Assertions.assertEquals(playerList.size(),resultPlayerList.size());
-//        Assertions.assertEquals(playerList,resultPlayerList);
-//    }
-//
-//    @Test
-//    public void testPlayerDataById() throws Exception {
-//        Long playerId = 1L;
-//        Player player = new Player(playerId,"Sahiti", 32);
-//        when(gameService.getPlayerById(playerId)).thenReturn(player);
-//        Player resultPlayer = gameController.playerDataById(playerId);
-//        Assertions.assertNotNull(resultPlayer);
-//        Assertions.assertEquals(player.getPlayerId(),resultPlayer.getPlayerId());
-//        Assertions.assertEquals(player.getName(),resultPlayer.getName());
-//        Assertions.assertEquals(player.getScore(),resultPlayer.getScore());
-//    }
-//
-//    @Test
-//    public void testDeletePlayer() throws Exception {
-//        long playerId = 1L;
-//        gameController.deletePlayer(playerId);
-//        verify(gameService).deletePlayer(playerId);
-//    }
-//
-//    @Test
-//    public void testTopFivePlayers() throws Exception {
-//        Player player1 = new Player(1L,"Sahiti", 32);
-//        Player player2 = new Player(2L,"Supriya", 24);
-//        Player player3 = new Player(3L,"Indu", 35);
-//        Player player4 = new Player(4L,"Preethi", 37);
-//        Player player5 = new Player(5L,"Dharani", 38);
-//        Player player6 = new Player(6L,"Vaishu", 39);
-//        List<Player> topFivePlayers = new ArrayList<>(Arrays.asList(player6,player5,player4,player3,player1));
-//        when(gameService.getTopFivePlayers()).thenReturn(topFivePlayers);
-//        List<Player> resultTopFivePlayers = gameController.topFivePlayers();
-//        Assertions.assertNotNull(resultTopFivePlayers);
-//        Assertions.assertEquals(resultTopFivePlayers.size(), 5);
-//        Assertions.assertEquals(resultTopFivePlayers, topFivePlayers);
-//    }
+    private GameService gameService;
+    private GameController gameController;
+
+    @BeforeEach
+    public void setup(){
+        gameService = mock(GameService.class);
+        gameController = new GameController(gameService);
+    }
+
+    @Test
+    public void testNewGameEntry() throws Exception {
+        Game game = new Game(1L,"PUBG", "100 players play it at a time");
+        when(gameService.postNewGame(game)).thenReturn(game);
+        Game resultGame = gameController.postNewGame(game);
+        Assertions.assertNotNull(resultGame);
+        Assertions.assertEquals(game.getGameId(),resultGame.getGameId());
+        Assertions.assertEquals(game.getGameName(),resultGame.getGameName());
+        Assertions.assertEquals(game.getDescription(),resultGame.getDescription());
+    }
+
+    @Test
+    public void testGetAllGame() throws Exception {
+        Game game1 = new Game(1L,"PUBG", "100 players play it at a time");
+        Game game2 = new Game(2L,"FIFA", "PLAY AT PS5");
+        List<Game> gameList = new ArrayList<>(Arrays.asList(game1,game2));
+        when(gameService.getAllGames()).thenReturn(gameList);
+        List<Game> resultGameList = gameController.getAllGames();
+        Assertions.assertNotNull(resultGameList);
+        Assertions.assertEquals(gameList.size(),resultGameList.size());
+        Assertions.assertEquals(gameList,resultGameList);
+    }
+
+    @Test
+    public void testGameDataById() throws Exception {
+        Long gameId = 1L;
+        Game game = new Game(gameId,"PUBG","100 Players play it at a time");
+        when(gameService.getGameById(gameId)).thenReturn(game);
+        Game resultGame = gameController.gameDataById(gameId);
+        Assertions.assertNotNull(resultGame);
+        Assertions.assertEquals(game.getGameId(),resultGame.getGameId());
+        Assertions.assertEquals(game.getGameName(),resultGame.getGameName());
+        Assertions.assertEquals(game.getDescription(),resultGame.getDescription());
+    }
+
+    @Test
+    public void testDeleteGame() throws Exception {
+        long gameId = 1L;
+        gameController.deleteGame(gameId);
+        verify(gameService).deleteGame(gameId);
+    }
+
+    @Test
+    public void testModifyPlayerData() throws Exception {
+        Game updatedGame = new Game(1L, "PBUG", "Updated game");
+        when(gameService.modifyGame(updatedGame)).thenReturn(updatedGame);
+        Game resultGame = gameController.modifyGameData(updatedGame);
+        Assertions.assertNotNull(resultGame);
+        Assertions.assertEquals(resultGame.getGameId(), updatedGame.getGameId());
+        Assertions.assertEquals(resultGame.getGameName(), updatedGame.getGameName());
+    }
 }

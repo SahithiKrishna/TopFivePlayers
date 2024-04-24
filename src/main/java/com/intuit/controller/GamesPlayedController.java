@@ -2,7 +2,6 @@ package com.intuit.controller;
 
 import com.intuit.dto.PlayerList;
 import com.intuit.entity.GamesPlayed;
-import com.intuit.repository.GamesPlayedRepository;
 import com.intuit.service.GamesPlayedService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +21,6 @@ public class GamesPlayedController {
     @Autowired
     private GamesPlayedService gamesPlayedService;
 
-    @Autowired
-    private GamesPlayedRepository gamesPlayedRepository;
-
 
     @PostMapping("/gamePlayed")
     public GamesPlayed newGamePlayedEntry(@RequestBody GamesPlayed gamesPlayed) throws NoSuchElementException {
@@ -32,13 +28,13 @@ public class GamesPlayedController {
         return gamesPlayedService.addNewGamePlayed(gamesPlayed);
     }
 
-    @GetMapping("gamesPlayedbyPlayer/{playerId}")
+    @GetMapping("gamesPlayedbyPlayerId/{playerId}")
     public List<GamesPlayed> gameDataByPlayerId(@PathVariable long playerId) {
         log.info("Received request to fetch game data for player with ID: {}", playerId);
         return gamesPlayedService.getAllGameForPlayerId(playerId);
     }
 
-    @GetMapping("gamesPlayedbyGame/{gameId}")
+    @GetMapping("gamesPlayedbyGameId/{gameId}")
     public List<GamesPlayed> playerDataByGameId(@PathVariable long gameId) {
         log.info("Received request to fetch player data for game with ID: {}", gameId);
         return gamesPlayedService.getAllPlayerByGameId(gameId);
